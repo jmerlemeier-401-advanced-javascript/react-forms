@@ -36,7 +36,7 @@ let PlayerForm = props => {
         <label htmlFor="team">Team</label>
         <Field name="team" component="input" type="text" />
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">Save</button>
     </form>
   );
 };

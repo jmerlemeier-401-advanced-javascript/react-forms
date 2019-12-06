@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import PlayerForm from './player-form.js';
+import PlayerForm from './player-redux-form.js';
 import * as actions from '../store/players-actions.js';
 
-class Player extends React.Component {
+class PlayerFormRedux extends React.Component {
 
   handleSubmit = (formData) => {
     if (parseInt(this.props.id) >= 0) {
@@ -43,4 +43,4 @@ const mapDispatchToProps = (dispatch, getState) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Player);
+)(PlayerFormRedux);
