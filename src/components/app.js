@@ -1,62 +1,54 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actions } from '../store/user/user-actions';
-import { actions } from '../store/messages/messages-action';
 
-import schema from '../store/schema.json';
+import Player from './player.js';
+
+import * as actions from '../store/players-actions.js';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id:null
+    }
+  }
 
-  // addUser = (e) => {
-  //   e.preventDefault();
-  //   let users = ['bob', 'karen'];
-  //   let newUser = 'I.P. Daily';
-  //   // let newUserId = 1234;
-  //   users.push(newUser);
-  //   this.props.handleSubmit(newUser);
-  //   console.log(users);
-  // }
+  deletePlayer = (id) => {
+    this.props.handleDelete(id);
+  }
+
+  editPlayer = (id) => {
+    this.setState({id});
+  }
 
   render() {
     return (
-      <>
-        <form onSubmit={this.addUser}>
-        <input type="username" placeholder="username" />
-        <input type="submit" value="login" onClick={this.props.handleSubmit}/>
-        </form>
-
-        <div>
-          <ul>
-            {this.props.messages.map(message => <li>{message.text}</li>)}
-          </ul>
-          <Form 
-            schema={schema}
-            formData={{id: }}
-            onSubmit={}
-          />
-
-        </div>
-      </>
+      <div>
+        <h2>Players</h2>
+        <ul>
+          {this.props.players.map( (player,idx) => 
+            <li key={idx}>
+              {player.name}
+              <button onClick={() => this.editPlayer(idx)}>Edit</button>
+              <button onClick={() => this.deletePlayer(idx)}>Delete</button>
+            </li>
+           )}
+        </ul>
+        <Player id={this.state.id} />
+      </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  //this function gets passed an object called state which can be used to attach properties onto component props
-  user: state.user,
-  messages: state.message
+const mapStateToProps = state => ({
+  players: state.players,
 });
 
 const mapDispatchToProps = (dispatch, getState) => ({
-  //this function gets passed a function called dispatch which can be called actions for the reducer.
-  //payload is passed into login.
-  handleSubmit: () => dispatch(actions.login({username: 'test'})),
-  logout: ()=> dispatch(actions.logout()),
-
-  handlePost: (message) = dispatch(actions.post(message))
+  handleGet: () => dispatch(actions.get()),
+  handleDelete: (id) => dispatch(actions.destroy(id)),
 });
 
-// curried functions 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
