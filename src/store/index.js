@@ -1,13 +1,14 @@
 import { createStore, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { reducer as formReducer } from 'redux-form'
 
-import userReducer from './user/user-reducers.js';
-import messagesReducer from './messages/messages-reducers.js';
+import playersReducer from './players-reducer.js';
 
 let reducers = combineReducers({
-  user: userReducer,
-  messages: messagesReducer
+  players: playersReducer,
+  form: formReducer
 });
 
-const store = () => createStore(reducers);
+const store = () => createStore(reducers, composeWithDevTools());
 
 export default store;
